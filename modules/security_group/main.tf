@@ -1,11 +1,25 @@
 resource "aws_security_group" "this" {
-  name        = "allow-ssh"
-  description = "Allow SSH access"
+  name        = "allow-ssh-web"
+  description = "Allow SSH and Web access"
   vpc_id      = var.vpc_id
 
   ingress {
     from_port   = 22
     to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -18,6 +32,6 @@ resource "aws_security_group" "this" {
   }
 
   tags = {
-    Name = "AllowSSH"
+    Name = "AllowSSH-Web"
   }
 }
